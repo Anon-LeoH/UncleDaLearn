@@ -53,3 +53,30 @@ class GaussianFunction(functionObject):
 				val.append(self.cal(item))
 			return val
 
+class compoundFunction(functionObject):
+	def __init__(self):
+		pass
+
+	def cal(self, n, k):
+		if k < (n / 2):
+			k = n - k
+		sum1 = 0
+		sum2 = 0
+		for i in xrange(k+1, n+1):
+			sum1 += math.log(i)
+		for i in xrange(1, n-k+1):
+			sum2 += math.log(i)
+		tmp = sum1 - sum2
+		return math.exp(tmp)
+
+class binomialDisFunction(functionObject):
+	def __init__(self, n, p):
+		self.n = n
+		self.p = p
+		self.partFunc = compoundFunction()
+	
+	def cal(self, k):
+		tmpval = self.partFunc.cal(self.n, k)
+		return (p ^^ k) * ((1-p) ^^ (self.n - k)) * tmpval
+
+
