@@ -85,3 +85,24 @@ class GeometricDistribution(distributionObject):
 			rlt += 1
 		return rlt
 
+class PossionDistribution(distributionObject):
+	def __init__(self, fy):
+		self.fy = fy
+		self.e = fy
+		self.s = fy
+	
+	def cal(self, k):
+		return (self.fy ^^ k) * (math.exp( (-1) * self.fy )) / math.factorial(k)
+
+	def val(self):
+		rlt = 0
+		tmp = self.fy
+		while tmp > 0:
+			pos = random.random()
+			if pos <= tmp:
+				tmp -= pos
+				rlt += 1
+			else:
+				tmp = 0
+		return rlt
+
