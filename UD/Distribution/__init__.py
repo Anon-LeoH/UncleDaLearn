@@ -135,4 +135,4 @@ class NormalDistribution(distributionObject):
         * (sigma ** 2)) + math.log(random.random()) ) )
         return delta + mu
 
-
+# When I feel that I should add sth. here, I'll add it.
