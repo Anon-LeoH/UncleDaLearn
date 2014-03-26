@@ -46,9 +46,9 @@ class linearRegression(object):
                     if ptr2 + i >= len(self.dataX):
                         ptr2 -= len(self.dataX)
                     xSum += cost * self.dataX[j][ptr2 + i]
-                xSum /= 2 * len(self.k)
-                alfa = alfa * 500 / (times + 500)
-                tmpParam[j] = 0.95 * tmpParam[j] - self.alfa * xSum
+                xSum /= len(self.k)
+                alfa = self.alfa * 500 / (times + 500)
+                tmpParam[j] = 0.95 * tmpParam[j] - alfa * xSum
             ptr2 += self.k
             self.param = [x for x in tmpParam]
             if J1 > J2:
