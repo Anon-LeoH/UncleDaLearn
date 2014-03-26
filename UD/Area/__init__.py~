@@ -13,7 +13,7 @@ class areaObject(mathObject):
 
 class areaPiece(areaObject):
     def __init__(self, content, tp):
-        areaObject.__init__(self)
+        areaObject.__init__()
         self.areaType = tp
         if isinstance(content, list):
             self.content = content
@@ -74,7 +74,7 @@ class areaPiece(areaObject):
 
 class Area(areaObject):
     def __init__(self, tp, thetaList):
-        areaObject.__init__(self)
+        areaObject.__init__()
         if isinstance(thetaList, list):
             tmp = []
             for item in thetaList:

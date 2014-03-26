@@ -1,4 +1,4 @@
-from Area import *
+from .. import Area
 from Math import *
 import math
 import numpy as np
@@ -78,4 +78,5 @@ class binomialDisFunction(functionObject):
     def cal(self, k):
         tmpval = self.partFunc.cal(self.n, k)
         return (p ** k) * ((1-p) ** (self.n - k)) * tmpval
+
 

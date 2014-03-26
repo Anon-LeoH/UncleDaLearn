@@ -73,6 +73,3 @@ class PosInfinite(mathObject):
         else:
             return False
 
-PosIf = PosInfinite()
-NegIf = NegInfinite()
-

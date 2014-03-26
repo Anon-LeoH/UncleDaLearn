@@ -2,8 +2,8 @@ import math
 
 def regularization(x):
     if not isinstance(x[0], list):
-        mu = float(sum(x)) / len(x)
-        mx = float(max(x)) - min(x)
+        mu = float(sum(x) / len(x))
+        mx = float(max(x) - min(x))
         if mx == 0:
             mx = 1
         rlt = [(item - mu) / mx for item in x]
