@@ -13,10 +13,8 @@ class gradientDescent(functionObject):
         for item in x:
             item = [1] + item
             self.x.append(item)
-        print self.x
         raw_input("")
         self.y = y
-        print y
         raw_input("")
         self.m = len(x)
         if len(initParam) != len(self.x):
@@ -29,7 +27,6 @@ class gradientDescent(functionObject):
         J1 = PosIf
         J2 = 0
         while realRate >= errorRate:
-            print self.param
             tmpParam = dp(self.param)
             J2 = 0
             for j in xrange(len(self.param)):

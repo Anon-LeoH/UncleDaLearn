@@ -4,19 +4,18 @@ from copy import deepcopy as dp
 import random
 from regularization import regularization as rg
 
-class linearRegression(functionObject):
-    def __init__(self, x, y, alfa, initParam = []):
+class hugeScaleLR(functionObject):
+    def __init__(self, x, y, alfa, k, initParam = []):
         functionObject.__init__(self)
+        self.k = k
         self.rParam, x = rg(x)
         self.rParam = [(0, 1)] + self.rParam
         self.x = []
         for item in x:
             item = [1] + item
             self.x.append(item)
-        print self.x
         raw_input("")
         self.y = y
-        print y
         raw_input("")
         self.m = len(x)
         if len(initParam) != len(self.x):
@@ -28,29 +27,36 @@ class linearRegression(functionObject):
         realRate = 999
         J1 = PosIf
         J2 = 0
+        ptr = 0
+        times = 0
         while realRate >= errorRate:
-            print self.param
+            trainSetX = []
+            trainSetY = []
+            for i in xrange(self.k):
+                if ptr + i >= self.m:
+                    ptr -= self.m
+                trainSetX.append(self.x[ptr+i])
+                trainSetY.append(self.y[ptr+i])
+            ptr += self.k
             tmpParam = dp(self.param)
             J2 = 0
             for j in xrange(len(self.param)):
                 sumX = 0
-                for i in xrange(self.m):
+                for i in xrange(self.k):
                     cost = 0
-                    for t in xrange(len(self.x[i])):
-                        cost += self.x[i][t] * self.param[t]
-                    cost -= self.y[i]
+                    for t in xrange(len(trainSetX[i])):
+                        cost += trainSetX[i][t] * self.param[t]
+                    cost -= trainSetY[i]
                     if j == 0:
                         J2 += cost ** 2
-                    sumX += cost * self.x[i][j]
-                sumX /= self.m
-                tmpParam[j] = tmpParam[j] - self.alfa * sumX
-            if J2 > J1:
-                raw_input("oops!")
-                break
+                    sumX += cost * trainSetX[i][j]
+                sumX /= self.k
+                tmpParam[j] = tmpParam[j] - self.alfa * 50000 / (times + 50000) * sumX
             self.param = tmpParam
             if J1 != PosIf:
-                realRate = (J1 - J2) / J2
+                realRate = abs(J1 - J2) / J2
             J1 = J2
+            times += 1
     
     def cal(self, x):
         if not isinstance(x[0], list):
