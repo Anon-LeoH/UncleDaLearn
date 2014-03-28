@@ -79,3 +79,15 @@ class binomialDisFunction(functionObject):
         tmpval = self.partFunc.cal(self.n, k)
         return (p ** k) * ((1-p) ** (self.n - k)) * tmpval
 
+class sigmoidFunction(functionObject):
+    def __init__(self, theta):
+        self.innerFunc = linearFunction([], theta)
+    
+    def cal(self, x):
+        tmp = self.innerFunc.cal(x)
+        if tmp == None:
+            return tmp
+        else:
+            return 1 / (1 + math.exp((-1) * tmp))
+
+
