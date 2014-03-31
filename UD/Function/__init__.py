@@ -35,7 +35,10 @@ class linearFunction(functionObject):
             return None
         if not len(self.theta) == len(x):
             return None
-        return sum( [x[i] * theta[i] for i in xrange(len(x))] )
+        return sum( [x[i] * self.theta[i] for i in xrange(len(x))] )
+    
+    def setTheta(self, theta):
+        self.theta = theta
 
 class GaussianFunction(functionObject):
     def __init__(self, mu = 0, sigma = 1, initArea = Area("continous", [[NegIf, PosIf]])):
@@ -89,5 +92,8 @@ class sigmoidFunction(functionObject):
             return tmp
         else:
             return 1 / (1 + math.exp((-1) * tmp))
+
+    def setTheta(self, theta):
+        self.innerFunc = linearFunction([], theta)
 
 

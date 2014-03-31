@@ -131,8 +131,7 @@ class NormalDistribution(distributionObject):
         return self.innerFunc.cal(x)
 
     def val(self):
-        delta = math.sqrt( (-1) * 2 * (sigma ** 2) * ( 0.5 * math.log(2 * np.pi
-        * (sigma ** 2)) + math.log(random.random()) ) )
-        return delta + mu
+        delta = math.sqrt(abs( (-1) * 2 * (self.sigma ** 2) * ( 0.5 * math.log(2 * np.pi * (self.sigma ** 2)) + math.log(random.random()) ) ))
+        return delta + self.mu
 
 # When I feel that I should add sth. here, I'll add it.

@@ -1,5 +1,6 @@
 from LinearRegression.HugeScaleLR import hugeScaleLR as hlr
 from LinearRegression.GradientDescent import gradientDescent as glr
+from LinearRegression.regularization import regularization as rg
 import numpy as np
 from copy import deepcopy as dp
 import random
@@ -7,12 +8,18 @@ import math
 from Function import *
 from Distribution import NormalDistribution as nd
 import matplotlib.pyplot as plt
+from NeuralNetwork import BPnetwork as bpn
 
 fig = plt.figure()  
 fig.suptitle(u'Informations gragh paramed by level', fontsize=14, fontweight='bold')  
 ax = fig.add_subplot(111)
 
-error = nd(0, 0.5)
+set11 = nd(3, 2.5)
+set12 = nd(3, 2.5)
+set13 = nd(3, 2.5)
+set21 = nd(-6, 1.0)
+set22 = nd(-6, 1.0)
+set23 = nd(-6, 1.0)
 
 class testFunc(functionObject):
 	def __init__(self):
@@ -24,38 +31,64 @@ class testFunc(functionObject):
 tf = testFunc()
 x = []
 y = []
+y2 = []
 
-for i in xrange(0, 2000):
-	tmp = [(i / 100.0) * 1, (i / 100.0) ** 2, (i / 100.0) ** 3]
-	x.append(tmp)
-	y.append(tf.cal(i / 100.0))
+for i in xrange(1000):
+	x.append([set11.val(), set12.val(), set13.val()])
+        y.append([1, 0])
 
-x1 = dp(x)
-y1 = dp(y)
-jg1 = glr(x, y, 0.009)
-jg2 = hlr(x1, y1, 0.009, 10)
+for i in xrange(1000):
+	x.append([set21.val(), set22.val(), set23.val()])
+        y.append([0, 1])
 
-jg1.train(0.00001)
-jg2.train(0.00001)
+y2 = [[item] for item in y2]
+jg = bpn([3, 4, 4, 2])
 
-for i in xrange(10):
-	tmp = random.uniform(0.1, 25.0)
-	ty1 = tf.cal(tmp)
-	tmp = [tmp * 1, tmp ** 2, tmp ** 3]
-        tmp1 = dp(tmp)
-	ty2 = jg1.cal(tmp)
-        ty3 = jg2.cal(tmp1)
-	rlt = (ty1, ty2, ty3)
-	print rlt
+jg.train(x, y, 0.03, 0.0005)
 
-x = np.arange(0.0, 25.0, 0.01)
-y1 = [tf.cal(item) for item in x]
-y2 = [jg1.cal([item, item ** 2, item ** 3]) for item in x]
-y3 = [jg2.cal([item, item ** 2, item ** 3]) for item in x]
+#for i in xrange(10):
+#	tmp = random.uniform(0.1, 25.0)
+#	ty1 = tf.cal(tmp)
+#	tmp = [tmp * 1, tmp ** 2, tmp ** 3]
+#        tmp1 = dp(tmp)
+#	ty2 = jg1.cal(tmp)[0]
+#        ty3 = jg2.cal(tmp1)
+#        ty2 = ty2 * param[1] + param[0]
+#	rlt = (ty1, ty2, ty3)
+#	print rlt
 
-ax.plot(x, y1, 'r', x, y2, 'b', x, y3, 'y')
+#x = np.arange(-20.0, 20.0, 0.01)
+#y1 = [tf.cal(item) for item in x]
+#y2 = [jg1.cal([item, item ** 2, item ** 3])[0] * param[1] + param[0] for item in x]
+#y3 = [jg2.cal([item, item ** 2, item ** 3]) for item in x]
 
-fig.savefig('level.png', dpi=100)
-fig.show()
+#ax.plot(x, y1, 'r', x, y2, 'b', x, y3, 'y')
 
+#fig.savefig('level.png', dpi=100)
+#fig.show()
+
+tr = 0
+fl = 0
+
+for i in xrange(100):
+    p = random.random()
+    if p >= 0.5:
+        tmpx = [set11.val(), set12.val(), set13.val()]
+        tmpy = 1
+    else:
+        tmpx = [set21.val(), set22.val(), set23.val()]
+        tmpy = 2
+    rlt = jg.cal(tmpx)
+    if rlt[0] > rlt[1]:
+        rlt = 1
+    else:
+        rlt = 2
+    if rlt == tmpy:
+        tr += 1
+    else:
+        fl += 1
+
+print "result: " + str(float(tr) / (tr + fl))
+
+    
 
