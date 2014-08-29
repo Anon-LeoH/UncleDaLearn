@@ -113,8 +113,8 @@ class UniformDistribution(distributionObject):
         self.e = (a + b) / 2
         self.s = ((b - a) ** 2) / 12
 
-    def cal(self, tp):
-        return (tp - self.a) / (self.b - self.a)
+    def cal(self, top, bottom):
+        return (top - bottom) / (self.b - self.a)
 
     def val(self):
         return math.uniform(self.a, self.b)
