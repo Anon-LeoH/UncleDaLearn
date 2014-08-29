@@ -114,10 +114,10 @@ class UniformDistribution(distributionObject):
         self.s = ((b - a) ** 2) / 12
 
     def cal(self, tp):
-        return (tp[1] - tp[0]) / (b - a)
+        return (tp[1] - tp[0]) / (self.b - self.a)
 
     def val(self):
-        return math.uniform(a, b)
+        return math.uniform(self.a, self.b)
 
 class NormalDistribution(distributionObject):
     def __init__(self, mu, sigma):
